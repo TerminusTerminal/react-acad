@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import { ChartColumnBig, Search, Warehouse, Menu, Home, Settings, User } from "lucide-react";
 import "./App.css";
+import Portal from "./portal/Portal";
 
 const SidebarButton = ({ icon: Icon, label, onClick }) => (
   <button className="sidebar-btn" onClick={onClick}>
     <Icon size={26} />
   </button>
 );
+
+const WarehouseMS = () => {
+  const [activeSection1, setActiveSection1] = useState(null);
+
+  const toggleSection1 = (section1) => {
+    setActiveSection1(activeSection1 === section1 ? null : section1);
+    }
+  };
 
 export default function App() {
   const [activePopup, setActivePopup] = useState(null);
@@ -17,6 +26,8 @@ export default function App() {
   const ProfileComponent = () => <p>👤 This is your Profile.</p>;
   const SettingsComponent = () => <p>⚙️ Adjust your Settings here.</p>;
   const StocksComponent = () => <p>Warehouse Stocks</p>;
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const togglePopup = (name) => {
     setActivePopup(activePopup === name ? null : name);
@@ -55,7 +66,18 @@ export default function App() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="search-input"
             />
-          <h3>{activePopup ? activePopup.toUpperCase() : ""}</h3>
+
+          <h2>{activePopup ? activePopup.toUpperCase() : ""}</h2>
+          {/*add any content here :P*/}
+          <button onClick={() => setIsOpen(!isOpen)}>togglePortal</button>
+          {isOpen && (
+            <div>
+              <Portal containerId={new Date().getTime}>
+                <p>Portal 1</p>
+              </Portal>
+            </div>
+          )}
+          <p>Some description or text here.</p>
             {activePopup === "home" && <HomeComponent searchQuery={searchQuery} />}
             {activePopup === "profile" && <ProfileComponent searchQuery={searchQuery} />}
             {activePopup === "settings" && <SettingsComponent searchQuery={searchQuery} />}
@@ -67,10 +89,18 @@ export default function App() {
         <div className="TopContentPage">
           <section id="contents">
             <p>Differential Calculus</p>
+            <p>></p>
             <p>Pre-Calculus</p>
+            <p>></p>
+            <p>Menu</p>
           </section>
           <section id="divider">
-            <p>______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________</p>
+            <p>_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________</p>
+          </section>
+        </div>
+        <div className="MidContentPage">
+          <section id="container1">
+            <h2>"Random Quote"</h2>
           </section>
         </div>
       </div>

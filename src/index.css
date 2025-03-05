@@ -28,12 +28,17 @@ body, html, #root {
   position: fixed;
 }
 
+.logo {
+
+}
+
 .sidebar-btn {
   background: none;
   border: none;
   color: white;
   cursor: pointer;
   margin: 4px;
+  padding: 5px;
 }
 
 .topbutton-sdb {
@@ -47,13 +52,13 @@ body, html, #root {
 
 .sidebar-btn:hover {
   border-radius: 5px;
-  padding: 1.2px;
+  padding: 5px;
   background-color: #515163;
   transition: 0.5s;
 }
 
 .bottomsidebar {
-  margin-top: 440px;
+  margin-top: 390px;
 }
 
 .popup {
@@ -108,26 +113,37 @@ body, html, #root {
   font-size: 14px;
 }
 
+.MainContentPage {
+  width: 100%;
+  height: 800px;
+}
 
 .TopContentPage {
   margin: 20px;
-  height: 800px;
-  width: 1940px;
+  height: 72px;
+  width: 100%;
 }
 
 .TopContentPage p {
   text-align: center;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 #divider p {
   text-align: center;
-  margin: 0;
+  margin-left: 60px;
+  color: #9b9ba5;
+  margin-top: 1px;
 }
 
 #contents {
   display: flex;
   flex-direction: row;
   padding-left: 100px;
+  color: #5c5c69;
+}
+
+#container1 h2 {
+  text-align: center;
 }
