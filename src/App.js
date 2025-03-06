@@ -1,7 +1,14 @@
 import React, { useState } from "react";
-import { ChartColumnBig, Search, Warehouse, Menu, Home, Settings, User } from "lucide-react";
+import { 
+  SquareChevronDown, ChartColumnBig, Search, Warehouse, Menu, Home, Settings, User,
+} from "lucide-react";
 import "./App.css";
-import Portal from "./portal/Portal";
+
+// Move your components here unless...
+export const HomeComponent = ({ searchQuery }) => <p>🏠 Welcome to Home!</p>;
+export const ProfileComponent = ({ searchQuery }) => <p>👤 This is your Profile.</p>;
+export const SettingsComponent = ({ searchQuery }) => <p>⚙️ Adjust your Settings here.</p>;
+export const StocksComponent = ({ searchQuery }) => <p>📦 Warehouse Stocks</p>;
 
 const SidebarButton = ({ icon: Icon, label, onClick }) => (
   <button className="sidebar-btn" onClick={onClick}>
@@ -9,30 +16,20 @@ const SidebarButton = ({ icon: Icon, label, onClick }) => (
   </button>
 );
 
-const WarehouseMS = () => {
-  const [activeSection1, setActiveSection1] = useState(null);
-
-  const toggleSection1 = (section1) => {
-    setActiveSection1(activeSection1 === section1 ? null : section1);
-    }
-  };
+const PopupButton = ({ icon: Icon, label, onClick }) => (
+  <button className="popup-btn" onClick={onClick}>
+    <Icon size={22} />
+  </button>
+);
 
 export default function App() {
   const [activePopup, setActivePopup] = useState(null);
-
   const [searchQuery, setSearchQuery] = useState("");
-
-  const HomeComponent = () => <p>🏠 Welcome to Home!</p>;
-  const ProfileComponent = () => <p>👤 This is your Profile.</p>;
-  const SettingsComponent = () => <p>⚙️ Adjust your Settings here.</p>;
-  const StocksComponent = () => <p>Warehouse Stocks</p>;
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const togglePopup = (name) => {
     setActivePopup(activePopup === name ? null : name);
   };
-  
+
   return (
     <div className="app">
       <div className="sidebar">
@@ -59,29 +56,27 @@ export default function App() {
           <div className="logoname">
             <h2>Warehouse</h2>
           </div>
+
+          {/* Search bar inside popup, yeah theres a search button, kinda useless ngl*/}
           <input
             type="text"
             placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="search-input"
-            />
+          />
 
           <h2>{activePopup ? activePopup.toUpperCase() : ""}</h2>
-          {/*add any content here :P*/}
-          <button onClick={() => setIsOpen(!isOpen)}>togglePortal</button>
-          {isOpen && (
-            <div>
-              <Portal containerId={new Date().getTime}>
-                <p>Portal 1</p>
-              </Portal>
-            </div>
-          )}
-          <p>Some description or text here.</p>
-            {activePopup === "home" && <HomeComponent searchQuery={searchQuery} />}
-            {activePopup === "profile" && <ProfileComponent searchQuery={searchQuery} />}
-            {activePopup === "settings" && <SettingsComponent searchQuery={searchQuery} />}
-            {activePopup === "stocks" && <StocksComponent searchQuery={searchQuery} />}
+
+          {/* Add any content IDK, you choose */}
+          <PopupButton className="add-btn" icon={SquareChevronDown} label="Add" onClick={() => togglePopup("add")} />
+          <p>Add New Things</p>
+
+          {/* Conditional content, it's just the components in ./src/components... */}
+          {activePopup === "home" && <HomeComponent searchQuery={searchQuery} />}
+          {activePopup === "profile" && <ProfileComponent searchQuery={searchQuery} />}
+          {activePopup === "settings" && <SettingsComponent searchQuery={searchQuery} />}
+          {activePopup === "stocks" && <StocksComponent searchQuery={searchQuery} />}
         </div>
       </div>
 
@@ -95,7 +90,9 @@ export default function App() {
             <p>Menu</p>
           </section>
           <section id="divider">
-            <p>_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________</p>
+            <p>
+              _____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+            </p>
           </section>
         </div>
         <div className="MidContentPage">
@@ -106,5 +103,4 @@ export default function App() {
       </div>
     </div>
   );
-};
-
+}

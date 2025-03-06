@@ -91,6 +91,11 @@ body, html, #root {
 
 .popup-content {
   margin-top: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    max-height: 100%;
 }
 
 .popup-content h2 {
@@ -147,3 +152,36 @@ body, html, #root {
 #container1 h2 {
   text-align: center;
 }
+
+.portalid p {
+margin-left: 100px;
+}
+
+.popup-content button {
+  padding: 10px 12px;
+  background-color: #1e1e2f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.popup-content button:hover {
+  background-color: #515163;
+  transition: 0.3s;
+}
+
+.add-btn {
+  background-color: #2e2e40;
+  color: #fff;
+}
+
+.popup.active {
+  left: 0;
+  /* padding-left: 90px; remove this if unwanted */
+}
+
+
+
