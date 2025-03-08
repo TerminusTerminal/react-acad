@@ -1,33 +1,34 @@
 import React, { useState } from "react";
-import { 
-  SquareChevronDown, ChartColumnBig, Search, Warehouse, Menu, Home, Settings, User,
+import {
+  SquareChevronUp, SquareChevronDown, Folder, FolderCheck, Grid2x2, Grid2x2Check, Search, Warehouse, Menu, Settings, User, UserCheck, Package, PackageCheck, List, SearchCheck
 } from "lucide-react";
 import "./App.css";
 
-// Move your components here unless...
 export const HomeComponent = ({ searchQuery }) => <p>🏠 Welcome to Home!</p>;
 export const ProfileComponent = ({ searchQuery }) => <p>👤 This is your Profile.</p>;
 export const SettingsComponent = ({ searchQuery }) => <p>⚙️ Adjust your Settings here.</p>;
+export const InventoryComponent = ({ searchQuery }) => <p>📦 Inventory</p>;
 export const StocksComponent = ({ searchQuery }) => <p>📦 Warehouse Stocks</p>;
 
-const SidebarButton = ({ icon: Icon, label, onClick }) => (
-  <button className="sidebar-btn" onClick={onClick}>
+const SidebarButton = ({ icon: Icon, label, onClick, isActive }) => (
+  <button className={`sidebar-btn ${isActive ? "active" : ""}`} onClick={onClick}>
     <Icon size={26} />
-  </button>
-);
-
-const PopupButton = ({ icon: Icon, label, onClick }) => (
-  <button className="popup-btn" onClick={onClick}>
-    <Icon size={22} />
   </button>
 );
 
 export default function App() {
   const [activePopup, setActivePopup] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   const togglePopup = (name) => {
-    setActivePopup(activePopup === name ? null : name);
+    setActivePopup((prev) => (prev === name ? null : name));
+    setActiveDropdown(name); 
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -37,27 +38,25 @@ export default function App() {
           <Warehouse />
         </div>
         <div className="topbutton-sdb">
-          <SidebarButton icon={Search} label="Search" onClick={() => togglePopup("search")} />
-          <SidebarButton icon={Menu} label="Menu" onClick={() => togglePopup("menu")} />
-          <SidebarButton icon={Home} label="Home" onClick={() => togglePopup("home")} />
-          <SidebarButton icon={ChartColumnBig} label="Stocks" onClick={() => togglePopup("stocks")} />
-          <SidebarButton icon={User} label="Profile" onClick={() => togglePopup("profile")} />
+          <SidebarButton icon={activePopup === "search" ? SearchCheck : Search} label="Search" onClick={() => togglePopup("search")} isActive={activePopup === "search"} />
+          <SidebarButton icon={activePopup === "menu" ? List : Menu} label="Menu" onClick={() => togglePopup("menu")} isActive={activePopup === "menu"} />
+          <SidebarButton icon={activePopup === "home" ? FolderCheck : Folder} label="Home" onClick={() => togglePopup("home")} isActive={activePopup === "home"} />
+          <SidebarButton icon={activePopup === "inventory" ? PackageCheck : Package} label="Inventory" onClick={() => togglePopup("inventory")} isActive={activePopup === "inventory"} />
+          <SidebarButton icon={activePopup === "stocks" ? Grid2x2Check : Grid2x2} label="Stocks" onClick={() => togglePopup("stocks")} isActive={activePopup === "stocks"} />
+          <SidebarButton icon={activePopup === "profile" ? UserCheck : User} label="Profile" onClick={() => togglePopup("profile")} isActive={activePopup === "profile"} />
         </div>
         <div className="bottomsidebar">
-          <SidebarButton icon={Settings} label="Settings" onClick={() => togglePopup("settings")} />
+          <SidebarButton icon={Settings} label="Settings" onClick={() => togglePopup("settings")} isActive={activePopup === "settings"} />
         </div>
       </div>
 
       <div className={`popup ${activePopup ? "active" : ""}`}>
-        <button className="close-btn" onClick={() => setActivePopup(null)}>
-          ×
-        </button>
+        <button className="close-btn" onClick={() => setActivePopup(null)}>×</button>
         <div className="popup-content">
           <div className="logoname">
             <h2>Warehouse</h2>
           </div>
 
-          {/* Search bar inside popup, yeah theres a search button, kinda useless ngl*/}
           <input
             type="text"
             placeholder="Search..."
@@ -68,13 +67,57 @@ export default function App() {
 
           <h2>{activePopup ? activePopup.toUpperCase() : ""}</h2>
 
-          {/* Add any content IDK, you choose */}
-          <PopupButton className="add-btn" icon={SquareChevronDown} label="Add" onClick={() => togglePopup("add")} />
-          <p>Add New Things</p>
+          <div className="dropdown-container">
+            <button className={`chevron-btn ${isDropdownOpen ? "rotated" : ""}`} onClick={toggleDropdown}>
+              {isDropdownOpen ? <SquareChevronUp size={22} /> : <SquareChevronDown size={22} />}
+            </button>
+            <button className="dropdown-name" onClick={toggleDropdown}>
+              {activeDropdown ? activeDropdown.toUpperCase() : "Select Option"}
+            </button>
+          </div>
+          {/* Changable Dropdown Contents */}
+          {isDropdownOpen && (
+            <div className="dropdown-content">
+              {activeDropdown === "home" && (
+                <>
+                  <button onClick={() => alert("🏠 Home Item 1")}>🏠 Home Item 1</button>
+                  <button onClick={() => alert("🏠 Home Item 2")}>🏠 Home Item 2</button>
+                </>
+              )}
+              {activeDropdown === "profile" && (
+                <>
+                  <button onClick={() => alert("👤 Profile Setting 1")}>👤 Profile Setting 1</button>
+                  <button onClick={() => alert("👤 Profile Setting 2")}>👤 Profile Setting 2</button>
+                </>
+              )}
+              {activeDropdown === "inventory" && (
+                <>
+                  <button onClick={() => alert("📦 Check Inventory")}>📦 Check Inventory</button>
+                  <button onClick={() => alert("📦 Inventory Report")}>📦 Inventory Report</button>
+                </>
+              )}
+              {activeDropdown === "settings" && (
+                <>
+                  <button onClick={() => alert("🔧 Change Password")}>🔧 Change Password</button>
+                  <button onClick={() => alert("🔧 Privacy Settings")}>🔧 Privacy Settings</button>
+                </>
+              )}
+              {activeDropdown === "stocks" && (
+                <>
+                  <button onClick={() => alert("📈 Stock Update")}>📈 Stock Update</button>
+                  <button onClick={() => alert("📈 Stock Analysis")}>📈 Stock Analysis</button>
+                </>
+              )}
+              {!["home", "profile", "inventory", "settings", "stocks"].includes(activeDropdown) && (
+                <p className="dropdown-placeholder">No options available.</p>
+              )}
+            </div>
+          )}
 
-          {/* Conditional content, it's just the components in ./src/components... */}
+          {/* Display Components Based on Active Popup */}
           {activePopup === "home" && <HomeComponent searchQuery={searchQuery} />}
           {activePopup === "profile" && <ProfileComponent searchQuery={searchQuery} />}
+          {activePopup === "inventory" && <InventoryComponent searchQuery={searchQuery} />}
           {activePopup === "settings" && <SettingsComponent searchQuery={searchQuery} />}
           {activePopup === "stocks" && <StocksComponent searchQuery={searchQuery} />}
         </div>
@@ -91,7 +134,7 @@ export default function App() {
           </section>
           <section id="divider">
             <p>
-              _____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+              _________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
             </p>
           </section>
         </div>
@@ -104,3 +147,4 @@ export default function App() {
     </div>
   );
 }
+

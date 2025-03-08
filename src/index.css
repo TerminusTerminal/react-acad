@@ -22,7 +22,8 @@ body, html, #root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
+  padding-top: 20px;
+  padding-bottom: 40px;
   gap: 20px;
   z-index: 4;
   position: fixed;
@@ -58,7 +59,7 @@ body, html, #root {
 }
 
 .bottomsidebar {
-  margin-top: 390px;
+  margin-top: 300px;
 }
 
 .popup {
@@ -135,9 +136,27 @@ body, html, #root {
   padding-right: 20px;
 }
 
+.chevron-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.7s ease, rotate 0.7s ease;
+  padding: 10px 12px;
+  background-color: white;
+  border: none;
+  color: black;
+  background: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.chevron-btn:hover {
+  color: #8f3434;
+}
+
 #divider p {
   text-align: center;
-  margin-left: 60px;
+  margin-left: 40px;
   color: #9b9ba5;
   margin-top: 1px;
 }
@@ -157,19 +176,7 @@ body, html, #root {
 margin-left: 100px;
 }
 
-.popup-content button {
-  padding: 10px 12px;
-  background-color: #1e1e2f;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  margin: 4px 0;
-  font-size: 14px;
-}
-
 .popup-content button:hover {
-  background-color: #515163;
   transition: 0.3s;
 }
 
@@ -178,10 +185,68 @@ margin-left: 100px;
   color: #fff;
 }
 
-.popup.active {
-  left: 0;
-  /* padding-left: 90px; remove this if unwanted */
+.dropdown-content {
+  animation: fadeIn 0.7s ease;
+  margin-top: 8px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+.popup.active {
+  left: 0;
+  /* padding-left: 90px; remove this if unwanted. just in case I need it.... */
+}
 
+.dropdown-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.dropdown-name {
+  padding: 10px 12px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: none;
+  color: #1e1e2f;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.dropdown-name:hover {
+  color: #8f3434;
+  font-weight: 400;
+  transition: 0.4s;
+}
+
+.dropdown-content button {
+  padding: 6px 10px;
+  background-color: white;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dropdown-content button:hover {
+  background-color: #ddd;
+}
+
+.dropdown-placeholder {
+  color: gray;
+  font-style: italic;
+}
