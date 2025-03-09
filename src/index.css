@@ -13,7 +13,7 @@ body, html, #root {
 .app {
   display: flex;
   height: 100vh;
-  background: #f4f4f4;
+  background: #e7e5e5;
 }
 
 .sidebar {
@@ -58,8 +58,19 @@ body, html, #root {
   transition: 0.5s;
 }
 
+
+.sidebar-btn.active {
+  background-color: #515163;
+  border-radius: 5px;
+}
+
+.sidebar-btn:not(.active) {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border-radius: 5px;
+}
+
 .bottomsidebar {
-  margin-top: 300px;
+  margin-top: 250px;
 }
 
 .popup {
@@ -150,13 +161,9 @@ body, html, #root {
   cursor: pointer;
 }
 
-.chevron-btn:hover {
-  color: #8f3434;
-}
-
 #divider p {
   text-align: center;
-  margin-left: 40px;
+  margin-left: -40px;
   color: #9b9ba5;
   margin-top: 1px;
 }
@@ -205,9 +212,26 @@ margin-left: 100px;
   }
 }
 
+.chevron-btn:hover {
+  color: #8f3434;
+}
+
+.chevron-btn {
+  transition: transform 0.3s ease;
+}
+
+.chevron-btn.rotated {
+  transform: rotate(360deg);
+  color: #8f3434;
+}
+
+.dropdown-placeholder {
+  color: gray;
+  font-style: italic;
+}
+
 .popup.active {
   left: 0;
-  /* padding-left: 90px; remove this if unwanted. just in case I need it.... */
 }
 
 .dropdown-container {
@@ -234,12 +258,29 @@ margin-left: 100px;
   transition: 0.4s;
 }
 
+.dropdown-content {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
 .dropdown-content button {
   padding: 6px 10px;
   background-color: white;
   border: 0;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.dropdown-content.open {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-placeholder {
+  color: gray;
+  font-style: italic;
+  transition: opacity 0.3s ease;
 }
 
 .dropdown-content button:hover {
@@ -249,4 +290,21 @@ margin-left: 100px;
 .dropdown-placeholder {
   color: gray;
   font-style: italic;
+}
+
+#container1 p {
+  margin: 0 200px;
+  justify-content: center;
+  text-align: center;
+}
+
+.MailPager {
+  height: 100px;
+  padding: 10px;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.MidContentPage {
+  margin: 0 700px;
 }
